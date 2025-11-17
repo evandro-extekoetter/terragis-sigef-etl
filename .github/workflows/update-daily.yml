@@ -1,0 +1,59 @@
+name: Atualizar base SIGEF/SNCI diariamente
+
+on:
+  schedule:
+    - cron: "0 3 * * *"  # todos os dias às 03:00 UTC
+  workflow_dispatch: {}   # permite rodar manualmente
+
+jobs:
+  update-sigef-snci:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Instalar dependências
+        run: |
+          python -m pip install --upgrade pip
+          pip install requests
+          sudo apt-get update
+          sudo apt-get install -y gdal-bin
+
+      - name: Definir variáveis de ambiente do banco
+        env:
+          PGHOST: ${{ secrets.PGHOST }}
+          PGPORT: ${{ secrets.PGPORT }}
+          PGDATABASE: ${{ secrets.PGDATABASE }}
+          PGUSER: ${{ secrets.PGUSER }}
+          PGPASSWORD: ${{ secrets.PGPASSWORD }}
+        run: echo "Variáveis de ambiente definidas a partir dos secrets do GitHub."
+
+      - name: Baixar arquivos SIGEF/SNCI
+        env:
+          PGHOST: ${{ secrets.PGHOST }}
+          PGPORT: ${{ secrets.PGPORT }}
+          PGDATABASE: ${{ secrets.PGDATABASE }}
+          PGUSER: ${{ secrets.PGUSER }}
+          PGPASSWORD: ${{ secrets.PGPASSWORD }}
+        run: |
+          python scripts/download_sigef.py
+
+      - name: Descompactar arquivos
+        run: |
+          python scripts/process_shapefile.py
+
+      - name: Atualizar PostGIS
+        env:
+          PGHOST: ${{ secrets.PGHOST }}
+          PGPORT: ${{ secrets.PGPORT }}
+          PGDATABASE: ${{ secrets.PGDATABASE }}
+          PGUSER: ${{ secrets.PGUSER }}
+          PGPASSWORD: ${{ secrets.PGPASSWORD }}
+        run: |
+          python scripts/update_postgis.py

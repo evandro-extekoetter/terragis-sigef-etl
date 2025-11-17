@@ -1,0 +1,28 @@
+{
+  "ufs": ["AC","AL","AM","AP","BA","CE","DF","ES","GO","MA","MG","MS","MT",
+          "PA","PB","PE","PI","PR","RJ","RN","RO","RR","RS","SC","SE","SP","TO"],
+  "datasets": [
+    {
+      "name": "sigef",
+      "url_template": "https://SEU_ENDPOINT_SIGEF/{uf}.zip",
+      "target_table": "sigef_imoveis"
+    },
+    {
+      "name": "snci",
+      "url_template": "https://SEU_ENDPOINT_SNCI/{uf}.zip",
+      "target_table": "snci_imoveis"
+    }
+  ],
+  "paths": {
+    "download_dir": "data/downloads",
+    "unzip_dir": "data/unzipped"
+  },
+  "db": {
+    "host_env": "PGHOST",
+    "port_env": "PGPORT",
+    "name_env": "PGDATABASE",
+    "user_env": "PGUSER",
+    "password_env": "PGPASSWORD",
+    "schema": "public"
+  }
+}
