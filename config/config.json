@@ -1,15 +1,42 @@
 {
-  "ufs": ["AC","AL","AM","AP","BA","CE","DF","ES","GO","MA","MG","MS","MT",
-          "PA","PB","PE","PI","PR","RJ","RN","RO","RR","RS","SC","SE","SP","TO"],
+  "ufs": [
+    "AC",
+    "AL",
+    "AM",
+    "AP",
+    "BA",
+    "CE",
+    "DF",
+    "ES",
+    "GO",
+    "MA",
+    "MG",
+    "MS",
+    "MT",
+    "PA",
+    "PB",
+    "PE",
+    "PI",
+    "PR",
+    "RJ",
+    "RN",
+    "RO",
+    "RR",
+    "RS",
+    "SC",
+    "SE",
+    "SP",
+    "TO"
+  ],
   "datasets": [
     {
       "name": "sigef",
-      "url_template": "https://SEU_ENDPOINT_SIGEF/{uf}.zip",
+      "url_template": "https://certificacao.incra.gov.br/csv_shp/zip/Sigef%20Brasil_{uf}.zip",
       "target_table": "sigef_imoveis"
     },
     {
       "name": "snci",
-      "url_template": "https://SEU_ENDPOINT_SNCI/{uf}.zip",
+      "url_template": "https://certificacao.incra.gov.br/csv_shp/zip/Imóvel%20certificado%20SNCI%20Brasil_{uf}.zip",
       "target_table": "snci_imoveis"
     }
   ],
