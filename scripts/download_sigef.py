@@ -1,6 +1,8 @@
 import json
 from pathlib import Path
 import requests
+import urllib3
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 CONFIG_PATH = Path(__file__).resolve().parents[1] / "config" / "config.json"
 
@@ -16,7 +18,7 @@ def download_file(url: str, dest: Path):
     # Verificar se arquivo já existe e comparar tamanho/data
     if dest.exists():
         try:
-            resp_head = requests.head(url, timeout=30)
+            resp_head = requests.head(url, timeout=30, verify=False)
             remote_size = int(resp_head.headers.get('content-length', 0))
             local_size = dest.stat().st_size
             
@@ -27,7 +29,7 @@ def download_file(url: str, dest: Path):
             print(f"[AVISO] Não foi possível verificar mudanças: {e}. Baixando novamente...")
     
     print(f"[DOWNLOAD] {url} -> {dest}")
-    resp = requests.get(url, stream=True, timeout=120)
+    resp = requests.get(url, stream=True, timeout=120, verify=False)
     resp.raise_for_status()
     with open(dest, "wb") as f:
         for chunk in resp.iter_content(chunk_size=8192):
