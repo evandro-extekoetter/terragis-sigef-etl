@@ -36,7 +36,7 @@
     },
     {
       "name": "snci",
-      "url_template": "https://certificacao.incra.gov.br/csv_shp/zip/Imóvel%20certificado%20SNCI%20Brasil_{uf}.zip",
+      "url_template": "https://certificacao.incra.gov.br/csv_shp/zip/Im%C3%B3vel%20certificado%20SNCI%20Brasil_{uf}.zip",
       "target_table": "snci_imoveis"
     }
   ],
